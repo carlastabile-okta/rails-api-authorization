@@ -43,7 +43,7 @@ module Secured
   end
 
   def validate_ownership(current_user)
-    raise 'validate_ownsership needs to be called with a block' unless block_given?
+    raise 'validate_ownership needs to be called with a block' unless block_given?
     return yield if @decoded_token.validate_user(current_user)
 
     render json: NOT_OWNER, status: :forbidden

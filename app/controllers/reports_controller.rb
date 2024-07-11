@@ -5,8 +5,8 @@ class ReportsController < ApplicationController
 
   # GET users/:user_id/reports/submitted
   def submitted
-    validate_ownership(@user) do
-      @reports = Report.where(submitter_id: @user.id)
+    validate_ownership(@user) do # user is the owner of these reports
+      @reports = Report.where(submitter_id: @user.id) # list only reports where user is submitter
 
       render json: @reports
     end
@@ -14,19 +14,20 @@ class ReportsController < ApplicationController
 
   # GET users/:user_id/reports/review
   def review
-    @reports = Report.where(approver_id: @user.id)
+    validate_ownership(@user) do # user is the owner of these reports
+      @reports = Report.where(approver_id: @user.id) # list only reports where user is approver
 
-    render json: @reports
+      render json: @reports
+    end
   end
 
   # GET users/:user_id/reports/1/approve
   def approve
-    validate_roles [ADMIN] do
-      if @report.is_approver?(@user)
+    validate_roles [ADMIN] do # if user is admin
+      if @report.is_approver?(@user) # if user is the approver for this report
         @report.status = "approved"
         @report.save
       end
-
       render json: @report
     end
   end
