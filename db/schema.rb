@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_05_095104) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_11_111155) do
   create_table "expenses", force: :cascade do |t|
     t.string "reason"
     t.datetime "date"
@@ -37,6 +37,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_05_095104) do
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "auth0_id"
   end
 
   add_foreign_key "expenses", "users", column: "submitter_id"

@@ -5,9 +5,11 @@ class ReportsController < ApplicationController
 
   # GET users/:user_id/reports/submitted
   def submitted
-    @reports = Report.where(submitter_id: @user.id)
+    validate_ownership(@user) do
+      @reports = Report.where(submitter_id: @user.id)
 
-    render json: @reports
+      render json: @reports
+    end
   end
 
   # GET users/:user_id/reports/review
@@ -24,7 +26,7 @@ class ReportsController < ApplicationController
         @report.status = "approved"
         @report.save
       end
-  
+
       render json: @report
     end
   end

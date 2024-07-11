@@ -17,11 +17,14 @@ module Secured
     error_description: 'The access token does not contain the required roles',
     message: 'Permission denied'
   }.freeze
+  NOT_OWNER = {
+    error: 'not_owner',
+    error_description: 'The access token does not belong to the current user',
+    message: 'Permission denied'
+  }.freeze
 
   def authorize
     token = token_from_request
-
-    return if performed?
 
     validation_response = Auth0Client.validate_token(token)
 
@@ -37,6 +40,13 @@ module Secured
     return yield if @decoded_token.validate_roles(roles)
 
     render json: INSUFFICIENT_ROLES, status: :forbidden
+  end
+
+  def validate_ownership(current_user)
+    raise 'validate_ownsership needs to be called with a block' unless block_given?
+    return yield if @decoded_token.validate_user(current_user)
+
+    render json: NOT_OWNER, status: :forbidden
   end
 
   private

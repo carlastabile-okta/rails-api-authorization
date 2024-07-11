@@ -14,6 +14,9 @@ class Auth0Client
       token_roles = Set.new token[0][Rails.configuration.auth0.roles]
       required_roles <= token_roles
     end
+    def validate_user(current_user)
+      current_user.auth0_id == token[0]["sub"]
+    end
   end
 
   # Helper Functions
