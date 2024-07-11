@@ -25,10 +25,14 @@ class ReportsController < ApplicationController
   def approve
     validate_roles [ADMIN] do # if user is admin
       if @report.is_approver?(@user) # if user is the approver for this report
-        @report.status = "approved"
-        @report.save
+        if Date.current.on_weekday? # can only approve on weekdays
+          @report.status = "approved"
+          @report.save
+          render json: @report
+        else
+          render json: {message: "Can only approve on weekedays"}, status: 401
+        end
       end
-      render json: @report
     end
   end
 
