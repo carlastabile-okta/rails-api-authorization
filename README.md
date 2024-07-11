@@ -10,11 +10,8 @@ You can use this repository as a starting point before following the instruction
 - branch: [`add-abac`](https://github.com/auth0-blog/rails-api-authorization/tree/add-rbac) has the code for the implementation explained in the the blog post [What is Attribute-Based Access Control and How to Implement it in my Rails API?](https://auth0.com/blog/what-is-rbac-and-how-to-implement-it-rails-api).
 
 ### Changelog
-- Protect endpoints using the `Secured` concern
-- Create and assign roles with Auth0 
-  - Create `admin` role in Auth0
-  - Create Auth0 Action to assign admin role to some users using custom claims
-  - Check for roles in yor API
+- User can only see reports submitted by them.
+- User can only approve reports in weekdays
 
 # Requirements
 
