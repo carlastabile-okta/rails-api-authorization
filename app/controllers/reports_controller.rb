@@ -30,7 +30,7 @@ class ReportsController < ApplicationController
           @report.save
           render json: @report
         else
-          render json: {message: "Can only approve on weekedays"}, status: 401
+          render json: {message: "Can only approve on weekdays"}, status: 401
         end
       end
     end
